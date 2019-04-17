@@ -3,6 +3,7 @@
  *
  * SPDX-License-Identifier:	GPL-2.0+
  */
+#define FEL_BOOT
 
 #ifndef __CONFIG_H
 #define __CONFIG_H
@@ -36,5 +37,19 @@
  * Include common sunxi configuration where most the settings are
  */
 #include <configs/sunxi-common.h>
+
+#ifdef FEL_BOOT
+/* Additional Stuff (For Spl Booting) */
+#define CONFIG_ENV_OVERWRITE
+#undef CONFIG_BOOTDELAY
+#define CONFIG_BOOTDELAY 1
+#undef CONFIG_BOOTARGS
+
+#undef CONFIG_EXTRA_ENV_SETTINGS
+#define CONFIG_EXTRA_ENV_SETTINGS \
+  "autoload=n\0" \
+  "distro_bootcmd=source 0xb0000000\0"
+
+#endif /* FEL_BOOT */
 
 #endif /* __CONFIG_H */
